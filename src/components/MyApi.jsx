@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 
 const MyApi = ({ data, setData }) => {
     const url = 'https://digimon-api.vercel.app/api/digimon';
+    const [sortOrder, setSortOrder] = useState('AZ');
 
     const fetchData = async () => {
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
+            const respuesta = await fetch(url);
+            if (!respuesta.ok) {
                 throw new Error('Error de carga en la API');
             }
-            const responseData = await response.json();
-            setData(responseData);
+            const respuestaData = await respuesta.json();
+            setData(respuestaData);
         } catch (error) {
             alert(error.message);
         }
@@ -21,21 +22,37 @@ const MyApi = ({ data, setData }) => {
         fetchData();
     }, []);
 
+    const sortedData = [...data];
+
+    sortedData.sort((a, b) => {
+        if (sortOrder === 'AZ') {
+            return a.name.localeCompare(b.name);
+        } else {
+            return b.name.localeCompare(a.name);
+        }
+    });
+
     return (
-        <div className="row mt-5 mb-5 justify-content-center">
-            <Card style={{ width: '18rem' }}>
-                {data.map((e) => (
-                    <div key={e.name}>
-                        <Card.Img variant="top" src={e.img} alt={e.name} />
+        <>
+            <div className="sorting-select">
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                    <option value="AZ">Nombre (A-Z)</option>
+                    <option value="ZA">Nombre (Z-A)</option>
+                </select>
+            </div>
+            <div className="gallery-container">
+                {sortedData.map((digimon) => (
+                    <Card key={digimon.name} className="gallery-card">
+                        <Card.Img variant="top" src={digimon.img} alt={digimon.name} />
                         <Card.Body>
-                            <Card.Title>{e.name} </Card.Title>
-                            <Card.Text>{e.level} </Card.Text>
+                            <Card.Title>{digimon.name}</Card.Title>
+                            <Card.Text>{digimon.level}</Card.Text>
                         </Card.Body>
-                    </div>
+                    </Card>
                 ))}
-            </Card>
-        </div>
+            </div>
+        </>
     );
-};
+}
 
 export default MyApi;
