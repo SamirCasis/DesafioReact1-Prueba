@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 const MyApi = ({ data, setData }) => {
     const url = 'https://digimon-api.vercel.app/api/digimon';
-    const [sortOrder, setSortOrder] = useState('AZ');
+    const [sort, setSort] = useState('AZ');
 
     const fetchData = async () => {
         try {
@@ -22,27 +22,27 @@ const MyApi = ({ data, setData }) => {
         fetchData();
     }, []);
 
-    const sortedData = [...data];
+    const sortData = [...data];
 
-    sortedData.sort((a, b) => {
-        if (sortOrder === 'AZ') {
-            return a.name.localeCompare(b.name);
+    sortData.sort((a, b) => {
+        if (sort === 'AZ') {
+            return a.name.localeCompare(b.name); // de la A a la Z
         } else {
-            return b.name.localeCompare(a.name);
+            return b.name.localeCompare(a.name); // de la Z a la A
         }
     });
 
     return (
         <>
-            <div className="sorting-select">
-                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <div className="select">
+                <select value={sort} onChange={(e) => setSort(e.target.value)}>
                     <option value="AZ">Nombre (A-Z)</option>
                     <option value="ZA">Nombre (Z-A)</option>
                 </select>
             </div>
-            <div className="gallery-container">
-                {sortedData.map((digimon) => (
-                    <Card key={digimon.name} className="gallery-card">
+            <div className="galeria">
+                {sortData.map((digimon, index) => (
+                    <Card key={index} className="card">
                         <Card.Img variant="top" src={digimon.img} alt={digimon.name} />
                         <Card.Body>
                             <Card.Title>{digimon.name}</Card.Title>

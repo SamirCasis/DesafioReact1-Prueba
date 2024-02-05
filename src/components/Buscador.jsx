@@ -1,15 +1,13 @@
-import React from "react";
-
-const Buscador = ({ data, dataFilter }) => {
+const Buscador = ({ data, setDataFilter }) => {
     const inputHandler = (e) => {
         const buscaPalabra = e.target.value.toLowerCase();
 
         const resultado = data.filter((digimon) =>
-            digimon.name.toLowerCase().includes(buscaPalabra) ||
-            digimon.level.toLowerCase().includes(buscaPalabra)
+            digimon.name.toLowerCase().includes(buscaPalabra) || 
+            digimon.level.toLowerCase().includes(buscaPalabra) 
         );
 
-        dataFilter(resultado);
+        setDataFilter(resultado);
     };
 
     return (
@@ -22,3 +20,6 @@ const Buscador = ({ data, dataFilter }) => {
 };
 
 export default Buscador;
+
+
+
