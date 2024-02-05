@@ -1,39 +1,41 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 
 const MyApi = ({ data, setData }) => {
     const url = 'https://digimon-api.vercel.app/api/digimon';
-    const apiData = async () => {
+
+    const fetchData = async () => {
         try {
-            const respuesta = await fetch(url);
-            if (!respuesta.ok) {
-                throw new Error('Error de carga en la Api')
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Error de carga en la API');
             }
-            const data = await respuesta.json();
-            setData(data.results);
+            const responseData = await response.json();
+            setData(responseData);
         } catch (error) {
-            alert({ message: error })
+            alert(error.message);
         }
-    }
+    };
 
     useEffect(() => {
-        apiData();
-    }, [])
-
+        fetchData();
+    }, []);
 
     return (
-        <Card style={{ width: '18rem' }}>
-            {data.map((e) => {
-                <div key={e.name}>
-                    <Card.Img variant="top" src={e.img} alt={e.name} />
-                    <Card.Body>
-                        <Card.Title>{e.name} </Card.Title>
-                        <Card.Text>{e.level} </Card.Text>
-                    </Card.Body>
-                </div>
-            })}
-        </Card>
-    )
-}
+        <div className="row mt-5 mb-5 justify-content-center">
+            <Card style={{ width: '18rem' }}>
+                {data.map((e) => (
+                    <div key={e.name}>
+                        <Card.Img variant="top" src={e.img} alt={e.name} />
+                        <Card.Body>
+                            <Card.Title>{e.name} </Card.Title>
+                            <Card.Text>{e.level} </Card.Text>
+                        </Card.Body>
+                    </div>
+                ))}
+            </Card>
+        </div>
+    );
+};
 
-export default MyApi
+export default MyApi;

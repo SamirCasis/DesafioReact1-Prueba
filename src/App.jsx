@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <header>
-        <h1>Hola Mundo</h1>
+        <img src="https://c0.klipartz.com/pngpicture/276/590/gratis-png-gabumon-agumon-digimon-tentomon-omnimon-digimon.png" alt="logo digimon"></img>
       </header>
       <section>
         <Buscador data={data} setData={setDataFilter} />

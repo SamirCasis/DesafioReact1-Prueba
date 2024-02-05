@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
 const Buscador = ({ data, dataFilter }) => {
     const inputHandler = (e) => {
         const buscaPalabra = e.target.value.toLowerCase();
 
-        const resultado = data.filter((usuario) =>
-            usuario.nombre.toLowerCase().includes(buscaPalabra) ||
-            usuario.correo.toLowerCase().includes(buscaPalabra) ||
-            usuario.edad.toString().toLowerCase().includes(buscaPalabra) ||
-            usuario.cargo.toLowerCase().includes(buscaPalabra) ||
-            usuario.telefono.toString().toLowerCase().includes(buscaPalabra)
+        const resultado = data.filter((digimon) =>
+            digimon.name.toLowerCase().includes(buscaPalabra) ||
+            digimon.level.toLowerCase().includes(buscaPalabra)
         );
 
         dataFilter(resultado);
@@ -18,7 +15,7 @@ const Buscador = ({ data, dataFilter }) => {
     return (
         <input
             type="text"
-            placeholder="Busca un colaborador"
+            placeholder="Busca un digimon"
             onChange={inputHandler}
         />
     );
